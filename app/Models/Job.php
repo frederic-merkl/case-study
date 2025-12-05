@@ -9,4 +9,5 @@ class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
+    // conflict with the internal jobs queue table => change to job_listings
 }

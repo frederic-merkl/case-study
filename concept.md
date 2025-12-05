@@ -41,14 +41,14 @@ Der User repräsentiert in diesem Konzept einen Administrator, der alle Modelle 
 - id (Integer)
 - name (String)
 - description (Text)
-- address (String)
+- city (String) // ändern zu city, Adressedaten zu einzelnen Feldern machen, street, zip-code, 			Country
 - email (String)
-- employee_size (Enum ["<10", "10-50", ">50"])
-- tags (List/Array)
+- employee_size (Enum ["<10", "10-50", ">50"]) // wurde erweitert, passe Konzept an
+- tags (List/Array) // typ wird zu text und serialisiert, laravel hat auto cast
 - created_at (Timestamp)
 - updated_at (Timestamp)
 
-## Category
+### Category
 - id (Integer)
 - name (String)
 
