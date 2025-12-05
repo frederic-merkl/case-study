@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id")->nullable()->constrained()->onDelete("set null"); // Job doesnt get deleted if user is deleted.
+            $table->foreignId("company_id")->constrained()->cascadeOnDelete();
+            $table->String("title", 255);
+            $table->text("description");
+            $table->String("contact_phone", 100)->nullable();
+            $table->String("contact_email", 255);
+            $table->String("contact_name", 100)->nullable();
+            $table->text("tags")->nullable(); // needs casting
             $table->timestamps();
         });
     }
@@ -22,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('job_listings');
     }
 };
