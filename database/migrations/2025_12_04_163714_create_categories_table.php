@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id(); // $table->bigIncrements('id')->primary();
             $table->string("name", 100)->unique();
-            $table->timestamps(); // convention to have it in all tables.            
+            $table->timestamps(); // convention to have timestamps in all tables.            
         });
     }
 
