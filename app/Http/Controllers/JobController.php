@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreJobRequest;
-use App\Http\Requests\UpdateJobRequest;
 use App\Models\Job;
+use App\Models\Company;
+use App\Models\Category;
+use Request;
 
 class JobController extends Controller
 {
@@ -13,7 +14,9 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $jobs = Job::where("is_active", true)->get();
+
+        return view("jobs.index", ["jobs" => $jobs]);
     }
 
     /**
@@ -21,39 +24,100 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        $categories = Category::all();
+
+        return view("jobs.create", [
+            "companies" => $companies,
+            "categories" => $categories
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJobRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "title" => "required|string|max:255",
+            "company_id" => "required|exists:companies,id",
+            "description" => "required|string",
+            "contact_email" => "required|email|max:255",
+            "min_salary" => "nullable|string",
+            "max_salary" => "nullable|string",
+            "location" => "nullable|string|max:100",
+            "contact_name" => "nullable|string|max:100",
+            "contact_phone" => "nullable|string|max:100",
+            "website" => "nullable|url|max:255",
+            "tags" => "nullable|string",
+            "category_ids" => "nullable|array",
+        ]);
+
+        $job = Job::create(array_merge($validated, [
+            "tags" => $request->input("tags"),
+            "is_active" => $request->boolean("is_active"),
+            "user_id" => auth()->id()
+        ]));
+
+        $job->categories()->sync($request->input("category_ids", []));
+
+        return redirect()->route("jobs.show", $job);
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Job $job)
     {
-        //
+        return view("jobs.show", ["job" => $job]);
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Job $job)
     {
-        //
+        $companies = Company::all();
+        $categories = Category::all();
+
+        $currentCategoryIds = $job->categories->pluck("id")->toArray();
+
+        return view("jobs.edit", [
+            "job" => $job,
+            "companies" => $companies,
+            "categories" => $categories,
+            "currentCategoryIds" => $currentCategoryIds
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateJobRequest $request, Job $job)
+    public function update(Request $request, Job $job)
     {
-        //
+        $validated = $request->validate([
+            "title" => "required|string|max:255",
+            "company_id" => "required|exists:companies,id",
+            "description" => "required|string",
+            "contact_email" => "required|email|max:255",
+            "min_salary" => "nullable|string",
+            "max_salary" => "nullable|string",
+            "location" => "nullable|string|max:100",
+            "contact_name" => "nullable|string|max:100",
+            "contact_phone" => "nullable|string|max:100",
+            "website" => "nullable|url|max:255",
+            "tags" => "nullable|string",
+            "category_ids" => "nullable|array",
+        ]);
+
+        $job->update(array_merge($validated, [
+            "tags" => $request->input("tags"),
+            "is_active" => $request->boolean("is_active"),
+        ]));
+
+        $job->categories()->sync($request->input("category_ids", []));
+
+        return redirect()->route("jobs.show", $job);
     }
 
     /**
@@ -61,6 +125,7 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        $job->delete();
+        return redirect()->route("jobs.index");
     }
 }
