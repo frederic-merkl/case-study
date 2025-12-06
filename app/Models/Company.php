@@ -15,7 +15,20 @@ class Company extends Model
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory;
 
-    protected $fillable = ["user_id", "name", "description", "city", "street", "zip_code", "country", "email", "employee_size", "tags"];
+    protected $fillable = [
+        "user_id",
+        "name",
+        "description",
+        "city",
+        "street",
+        "zip_code",
+        "country",
+        "email",
+        "phone",
+        "website",
+        "employee_size",
+        "tags"
+    ];
     protected $casts = ["tags" => "array"];
 
     public function user(): BelongsTo

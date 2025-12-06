@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -21,6 +20,8 @@ return new class extends Migration
             $table->string("zip_code", 100)->nullable();
             $table->string("country", 100)->nullable();
             $table->string("email", 255)->unique();
+            $table->string("phone", 100)->unique();
+            $table->string("website", 255)->unique();
             $table->enum("employee_size", ["<10", "10-50", ">50", "50-100", ">100", ">500"])->nullable(); // needs casting
             $table->text("tags")->nullable(); // needs casting
             $table->timestamps(); //created_at + updated_at

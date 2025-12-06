@@ -28,27 +28,41 @@ Der User repräsentiert in diesem Konzept einen Administrator, der alle Modelle 
 
 ## Modelle und Attribute
 
-### Job // konflikt mit interner jobs table. => job_listings // add user_id
+### Job 
 - id (Integer)
 - company_id (Integer)
 - user_id(Integer)
 - title (String)
 - description (Text)
+- min_salary
+- max_salary
+- location
+
 - contact_phone(String)
 - contact_email(String)
 - contact_name(String)
 - tags (List/Array/JSON)
+- is_active (boolean)
+- expires_at (String)
 - created_at (Timestamp)
 - updated_at (Timestamp)
 
+
+
 ### Company
 - id (Integer)
+- user_id (Integer)
 - name (String)
 - description (Text)
-- city (String) // ändern zu city, Adressedaten zu einzelnen Feldern machen, street, zip-code, 			Country
+- city (String)
+- street
+- zip-code
+- Country
 - email (String)
-- employee_size (Enum ["<10", "10-50", ">50", "50-100", ">100", ">500"]) // wurde erweitert, passe Konzept an
-- tags (List/Array/Text-JSON) // typ wird zu text und serialisiert, laravel hat auto cast
+- website (String)
+- phone (String)
+- employee_size (Enum ["<10", "10-50", ">50", "50-100", ">100", ">500"]) 
+- tags (List/Array/Text-JSON)
 - created_at (Timestamp)
 - updated_at (Timestamp)
 
@@ -62,8 +76,10 @@ Der User repräsentiert in diesem Konzept einen Administrator, der alle Modelle 
 - id (Integer)
 - name (String)
 - email (String)
+- password(String)
 - created_at (Timestamp)
 - updated_at (Timestamp)
+
 
 
 ## Beziehungen

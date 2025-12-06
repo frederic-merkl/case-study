@@ -51,11 +51,11 @@ class User extends Authenticatable
         ];
     }
 
-     public function jobs(): HasMany
+    public function jobs(): HasMany
     {
         return $this->hasMany(Job::class);
     }
-     public function companies(): HasMany
+    public function companies(): HasMany
     {
         return $this->hasMany(Company::class);
     }
