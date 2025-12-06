@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompanyRequest;
-use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource (Liste aller Firmen).
      */
     public function index()
     {
-        //
+        $companies = Company::all();
+
+        return view("companies.index", ["companies" => $companies]);
     }
 
     /**
@@ -21,23 +22,40 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view("companies.create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCompanyRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "name" => "required|string|max:255|unique:companies,name",
+            "description" => "required|string",
+            "email" => "required|email|max:255|unique:companies,email",
+            "city" => "required|string|max:100",
+            "street" => "nullable|string|max:255",
+            "zip_code" => "nullable|string|max:100",
+            "country" => "nullable|string|max:100",
+            "phone" => "nullable|string|max:100",
+            "website" => "nullable|url|max:255",
+            "employee_size" => "nullable|string",
+        ]);
+
+        $company = Company::create(array_merge($validated, [
+            "user_id" => auth()->id(),
+        ]));
+
+        return redirect()->route("companies.show", $company);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource (Detailansicht).
      */
     public function show(Company $company)
     {
-        //
+        return view("companies.show", ["company" => $company]);
     }
 
     /**
@@ -45,15 +63,30 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view("companies.edit", ["company" => $company]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(Request $request, Company $company)
     {
-        //
+        $validated = $request->validate([
+            "name" => "required|string|max:255|unique:companies,name,",
+            "description" => "required|string",
+            "email" => "required|email|max:255|unique:companies,email,",
+            "city" => "required|string|max:100",
+            "street" => "nullable|string|max:255",
+            "zip_code" => "nullable|string|max:100",
+            "country" => "nullable|string|max:100",
+            "phone" => "nullable|string|max:100",
+            "website" => "nullable|url|max:255",
+            "employee_size" => "nullable|string",
+        ]);
+
+        $company->update($validated);
+
+        return redirect()->route("companies.show", $company);
     }
 
     /**
@@ -61,6 +94,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return redirect()->route("companies.index");
     }
 }
