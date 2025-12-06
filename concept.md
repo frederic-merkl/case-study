@@ -62,7 +62,6 @@ Der User repräsentiert in diesem Konzept einen Administrator, der alle Modelle 
 - website (String)
 - phone (String)
 - employee_size (Enum ["<10", "10-50", ">50", "50-100", ">100", ">500"]) 
-- tags (List/Array/Text-JSON)
 - created_at (Timestamp)
 - updated_at (Timestamp)
 

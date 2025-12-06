@@ -23,7 +23,6 @@ return new class extends Migration {
             $table->string("phone", 100)->unique();
             $table->string("website", 255)->unique();
             $table->enum("employee_size", ["<10", "10-50", ">50", "50-100", ">100", ">500"])->nullable(); // needs casting
-            $table->text("tags")->nullable(); // needs casting
             $table->timestamps(); //created_at + updated_at
         });
     }

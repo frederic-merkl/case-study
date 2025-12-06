@@ -26,11 +26,9 @@ class Company extends Model
         "email",
         "phone",
         "website",
-        "employee_size",
-        "tags"
+        "employee_size"
     ];
-    protected $casts = ["tags" => "array"];
-
+ 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
