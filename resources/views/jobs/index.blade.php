@@ -11,7 +11,7 @@
     <header>
         <h1>Aktive Stellenangebote</h1>
         <p>
-            <a href="{{ route("jobs.create") }}">Neuen Job erstellen</a>
+            <a href="{{ route("jobs.create") }}">Neuen Stellenangebot erstellen</a>
         </p>
     </header>
 
@@ -31,11 +31,11 @@
 
     <footer>
         <hr>
-        <a href="{{ route("jobs.index") }}">Job-Übersicht</a>
+        <a href="{{ route("categories.index") }}">Kategorien</a>
         <br>
-        <a href="{{ route("categories.index") }}">Kategorien-Verwaltung</a>
+        <a href="{{ route("companies.index") }}">Firmen</a>
         <br>
-        <a href="{{ route("companies.index") }}">Firmen-Verwaltung</a>
+        <a href="{{ route("users.index") }}">Benutzer</a>
     </footer>
 </body>
 

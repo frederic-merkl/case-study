@@ -31,11 +31,11 @@
 
     <footer>
         <hr>
-        <a href="{{ route("companies.index") }}">Unternehmens-Übersicht</a>
+        <a href="{{ route("jobs.index") }}">Stellenangebote</a>
         <br>
-        <a href="{{ route("jobs.index") }}">Job-Übersicht</a>
+        <a href="{{ route("categories.index") }}">Kategorien</a>
         <br>
-        <a href="{{ route("categories.index") }}">Kategorien-Übersicht</a>
+        <a href="{{ route("users.index") }}">Benutzer</a>
     </footer>
 </body>
 

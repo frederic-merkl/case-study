@@ -46,8 +46,11 @@
 
 	<footer>
 		<hr>
-		<a href="{{ route('users.index') }}">Benutzer-Übersicht</a>
+		<a href="{{ route('jobs.index') }}">Stellenangebote</a>
 		<br>
+		<a href="{{ route(name: 'companies.index') }}">Firmen</a>
+		<br>
+		<a href="{{ route('categories.index') }}">Kategorien</a>
 	</footer>
 </body>
 
