@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Benutzer: {{ $user->name }}</title>
+	<link rel="stylesheet" href="{{ asset('css/users.css') }}">
 </head>
 
 <body>
@@ -28,9 +29,12 @@
 		Aktualisiert: {{ $user->updated_at }}
 	</div>
 
-	<footer>
-		<a href="{{ route('users.index') }}">Übersicht</a>
-	</footer>
+    <footer>
+        <hr>
+        <a href="{{ route('users.edit', $user) }}">Bearbeiten</a>
+        <br>
+        <a href="{{ route('users.index') }}">Zur Übersicht</a>
+    </footer>
 </body>
 
 </html>

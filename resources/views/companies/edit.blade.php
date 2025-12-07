@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unternehmen bearbeiten: {{ $company->name }}</title>
+    <link rel="stylesheet" href="{{ asset('css/companies.css') }}">
 </head>
 
 <body>

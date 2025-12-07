@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job bearbeiten: {{ $job->title }}</title>
+    <link rel="stylesheet" href="{{ asset('css/jobs.css') }}">
 </head>
 
 <body>
     <div>
-        <form action="{{ route("jobs.update") }}" method="POST">
+        <form action="{{ route("jobs.update", $job) }}" method="POST">
 			@csrf
 			@method("PUT")
             
