@@ -9,7 +9,10 @@
 
 <body>
     <div>
-        <form action="{{ route("jobs.update") }}" method="PUT">
+        <form action="{{ route("jobs.update") }}" method="POST">
+			@csrf
+			@method("PUT")
+            
             <h2>Job bearbeiten</h2>
 
             <div>

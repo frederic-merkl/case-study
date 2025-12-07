@@ -10,7 +10,7 @@
 <body>
     <div>
         <form action="{{ route('jobs.store') }}" method="POST">
-
+            @csrf
             <h2>Neues Jobangebot anlegen</h2>
 
             <div>

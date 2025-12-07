@@ -10,7 +10,7 @@
 <body>
 	<div>
 		<form action="{{ route('categories.store') }}" method="POST">
-
+			@csrf
 			<h2>Neue Kategorie anlegen</h2>
 
 			<div>

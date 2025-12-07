@@ -10,7 +10,7 @@
 <body>
     <div>
         <form action="{{ route('companies.store') }}" method="POST">
-
+            @csrf
             <h2>Neues Unternehmen anlegen</h2>
 
             <div>
