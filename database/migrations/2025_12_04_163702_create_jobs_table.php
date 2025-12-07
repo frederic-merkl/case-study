@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->String("website", 255)->nullable();
             $table->text("tags")->nullable(); // needs casting
             $table->boolean("is_active")->default(false);
+            $table->date("expires_at")->nullable();
             $table->timestamps();
         });
     }
