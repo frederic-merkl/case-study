@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return view('jobs/index');
+    return redirect()->route('jobs.index');
 });
 
 // Resource routes with implicit model binding
