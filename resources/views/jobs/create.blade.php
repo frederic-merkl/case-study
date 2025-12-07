@@ -11,6 +11,13 @@
     <div>
         <form action="{{ route('jobs.store') }}" method="POST">
             @csrf
+            @if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
             <h2>Neues Jobangebot anlegen</h2>
 
             <div>
@@ -46,6 +53,57 @@
             <div>
                 <label for="description">Beschreibung</label>
                 <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+
+            <div>
+                <label for="min_salary">Mindestgehalt</label>
+                <input id="min_salary" type="number" name="min_salary">
+            </div>
+
+            <div>
+                <label for="max_salary">Höchstgehalt</label>
+                <input id="max_salary" type="number" name="max_salary">
+            </div>
+
+            <div>
+                <label for="location">Ort</label>
+                <input id="location" type="text" name="location">
+            </div>
+
+            <div>
+                <label for="contact_name">Ansprechpartner</label>
+                <input id="contact_name" type="text" name="contact_name">
+            </div>
+
+            <div>
+                <label for="contact_phone">Telefon</label>
+                <input id="contact_phone" type="text" name="contact_phone" placeholder="Vorwahl/Telefonummer">
+            </div>
+
+            <div>
+                <label for="tags">Tags</label>
+                <input id="tags" type="text" name="tags" placeholder="tag1, tag2, ...">
+            </div>
+
+            <div>
+                <span>Aktiv</span>
+                <div>
+                    <label>
+                        <input type="radio" name="is_active" value="1" checked>
+                        aktiv
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="is_active" value="0">
+                        inaktiv
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="expires_at">Ablaufdatum</label>
+                <input id="expires_at" type="date" name="expires_at">
             </div>
 
             <div>
