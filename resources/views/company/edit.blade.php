@@ -64,7 +64,7 @@
                 <label for="employee_size">Mitarbeiterzahl</label>
                 <select id="employee_size" name="employee_size">
                     <option value="">Größe auswählen</option>
-                    <option value="<10" {{ $company->employee_size == '<10' ? "selected" : "" }}></option>
+                    <option value="<10" {{ $company->employee_size == '<10' ? "selected" : "" }}><10</option>
                     <option value="10-50" {{ $company->employee_size == '10-50' ? "selected" : "" }}>10-50</option>
                     <option value=">50" {{ $company->employee_size == '>50' ? "selected" : "" }}>>50</option>
                     <option value="50-100" {{ $company->employee_size == '50-100' ? "selected" : "" }}>50-100</option>
