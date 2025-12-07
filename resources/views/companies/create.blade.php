@@ -11,6 +11,14 @@
     <div>
         <form action="{{ route('companies.store') }}" method="POST">
             @csrf
+            @if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
+
             <h2>Neues Unternehmen anlegen</h2>
 
             <div>
@@ -62,7 +70,7 @@
                 <label for="employee_size">Mitarbeiterzahl</label>
                 <select id="employee_size" name="employee_size">
                     <option value="">Größe auswählen</option>
-                    <option value="<10"></option>
+                    <option value="<10">&lt;10</option>
                     <option value="10-50">10-50</option>
                     <option value=">50">>50</option>
                     <option value="50-100">50-100</option>

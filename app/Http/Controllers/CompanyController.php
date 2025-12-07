@@ -39,7 +39,7 @@ class CompanyController extends Controller
             "zip_code" => "nullable|string|max:100",
             "country" => "nullable|string|max:100",
             "phone" => "nullable|string|max:100",
-            "website" => "nullable|url|max:255",
+            "website" => "nullable|string|max:255",
             "employee_size" => "nullable|string",
         ]);
 
