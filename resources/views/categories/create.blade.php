@@ -12,6 +12,13 @@
 	<div>
 		<form action="{{ route('categories.store') }}" method="POST">
 			@csrf
+			@if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 			<h2>Neue Kategorie anlegen</h2>
 
 			<div>

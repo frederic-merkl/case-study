@@ -13,6 +13,14 @@
         <form action="{{ route("companies.update", $company) }}" method="POST">
             @csrf
             @method("PUT")
+            @if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
+
 
             <h2>Unternehmen bearbeiten</h2>
 

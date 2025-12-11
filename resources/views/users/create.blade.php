@@ -12,6 +12,13 @@
 	<div>
 		<form action="{{ route('users.store') }}" method="POST">
 			@csrf
+			@if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
 			<h2>Neuen Benutzer anlegen</h2>
 

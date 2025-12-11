@@ -13,6 +13,13 @@
 		<form action="{{ route('categories.update', $category) }}" method="POST">
 			@csrf
 			@method("PUT")
+			@if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
 			<h2>Kategorie bearbeiten</h2>
 

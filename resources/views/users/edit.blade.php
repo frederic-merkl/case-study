@@ -13,6 +13,13 @@
 		<form action="{{ route('users.update', $user) }}" method="POST">
 			@csrf
 			@method('PUT')
+			@if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
 			<h2>Benutzer bearbeiten</h2>
 

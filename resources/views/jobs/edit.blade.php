@@ -13,6 +13,13 @@
         <form action="{{ route("jobs.update", $job) }}" method="POST">
 			@csrf
 			@method("PUT")
+            @if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
             
             <h2>Job bearbeiten</h2>
 
