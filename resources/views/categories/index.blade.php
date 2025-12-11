@@ -34,7 +34,7 @@
         <hr>
         <a href="{{ route("jobs.index") }}">Stellenangebote</a>
         <br>
-        <a href="{{ route("categories.index") }}">Kategorien</a>
+        <a href="{{ route("companies.index") }}">Firmen</a>
         <br>
         <a href="{{ route("users.index") }}">Benutzer</a>
     </footer>

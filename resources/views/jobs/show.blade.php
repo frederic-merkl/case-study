@@ -46,7 +46,7 @@
         <hr>
         <a href="{{ route('jobs.edit', $job) }}">Bearbeiten</a>
         <br>
-        <a href="{{ route('categories.index') }}">Zur Übersicht</a>
+        <a href="{{ route('jobs.index') }}">Zur Übersicht</a>
     </footer>
 
 </body>
