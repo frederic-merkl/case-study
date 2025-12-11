@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId("user_id")->nullable()->constrained()->onDelete("set null"); // Job doesnt get deleted if user is deleted.
             $table->foreignId("company_id")->constrained()->cascadeOnDelete();
             $table->String("title", 255);
-            $table->text("description")->nullable();
+            $table->text("description");
             $table->string("min_salary", 100)->nullable();
             $table->string("max_salary", 100)->nullable();
             $table->string("location", 100)->nullable();
