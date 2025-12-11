@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string("email", 255)->unique();
             $table->string("phone", 100)->nullable(); // removed unique, I think its not practical
             $table->string("website", 255)->nullable(); // removed unique
-            $table->enum("employee_size", ["<10", "10-50", ">50", "50-100", ">100", ">500"])->nullable(); // needs casting
+            $table->enum("employee_size", ["<10", "10-50", "50-100", ">100", ">500"])->nullable(); // needs casting
             $table->timestamps(); //created_at + updated_at
         });
     }
