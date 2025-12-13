@@ -59,7 +59,7 @@ class JobController extends Controller
             "user_id" => auth()->id()
         ]));
 
-        $job->categories()->sync($request->input("category_ids", []));
+        $job->categories()->sync($request->input("category_ids"));
 
         return redirect()->route("jobs.show", $job);
     }

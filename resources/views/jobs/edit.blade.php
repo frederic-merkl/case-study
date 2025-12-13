@@ -110,6 +110,8 @@
             <div>
                 <label for="expires_at">Ablaufdatum</label>
                 <!-- TODO find the bug, value is not shown -->
+                <!-- TODO find the bug, value is not shown -->
+                <!-- TODO find the bug, value is not shown -->
                 <input type="date" id="expires_at" name="expires_at" value="{{ $job->expires_at }}">
             </div>
 

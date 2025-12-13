@@ -33,7 +33,7 @@ class Job extends Model
         "is_active"
     ];
     protected $casts = [
-        "tags" => "array",
+        // "tags" => "array",
         "is_active" => "boolean"
     ];
 
