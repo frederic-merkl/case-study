@@ -14,7 +14,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::where("is_active", true)->get();
+        $jobs = Job::get(); // where("is_active", true)->get() to get only active
 
         return view("jobs.index", ["jobs" => $jobs]);
     }
@@ -48,7 +48,7 @@ class JobController extends Controller
             "location" => "nullable|string|max:100",
             "contact_name" => "nullable|string|max:100",
             "contact_phone" => "nullable|string|max:100",
-            "website" => "nullable|url|max:255",
+            "website" => "nullable|string|max:255",
             "tags" => "nullable|string",
             "category_ids" => "nullable|array",
         ]);
@@ -80,11 +80,13 @@ class JobController extends Controller
         $companies = Company::all();
         $categories = Category::all();
 
+        $currentCompany = $job->company->id;
         $currentCategoryIds = $job->categories->pluck("id")->toArray();
 
         return view("jobs.edit", [
             "job" => $job,
             "companies" => $companies,
+            "currentCompany" => $currentCompany,
             "categories" => $categories,
             "currentCategoryIds" => $currentCategoryIds
         ]);
@@ -105,7 +107,7 @@ class JobController extends Controller
             "location" => "nullable|string|max:100",
             "contact_name" => "nullable|string|max:100",
             "contact_phone" => "nullable|string|max:100",
-            "website" => "nullable|url|max:255",
+            "website" => "nullable|string|max:255",
             "tags" => "nullable|string",
             "category_ids" => "nullable|array",
         ]);
