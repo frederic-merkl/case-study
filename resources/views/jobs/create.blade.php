@@ -35,11 +35,10 @@
                     @endforeach
                 </select>
             </div>
-
+                <!-- refactor to checkboxes to be more user friendly. alternatively build JS that accepts multiple clicks without modifier -->
             <div>
                 <label for="category_id">Kategorie</label>
-                <select id="category_id" name="category_id" required>
-                    <option value="">Kategorie auswählen</option>
+                <select id="category_id" name="category_ids[]" required multiple>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach

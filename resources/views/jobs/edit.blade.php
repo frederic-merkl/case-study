@@ -28,12 +28,11 @@
                 <input id="title" type="text" name="title" value="{{ $job->title }}" required>
             </div>
 
-            <div> <!-- Muss wohl angepasst werden damit die kategorie richtig angezeigt wird-->
+            <div> 
                 <label for="company_id">Unternehmen</label>
                 <select id="company_id" name="company_id" required>
-                    <option value="">Firma auswählen</option>
                     @foreach ($companies as $company)
-                        <option value="{{ $company->id }}">
+                        <option value="{{ $company->id }}" selected>
                             {{ $company->name }}
                         </option>
                     @endforeach
@@ -42,10 +41,11 @@
 
             <div> 
                 <label for="category_id">Kategorie</label>
-                <select id="category_id" name="category_id" required>
-                    <option value="">Kategorie auswählen</option>
+                <select id="category_id" name="category_ids[]" required multiple>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"></option>
+                        <option value="{{ $category->id }}"
+                        @selected(in_array($category->id, $currentCategoryIds))>
+                        {{$category->name}}</option>
                         </option>
                     @endforeach
                 </select>

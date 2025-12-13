@@ -34,7 +34,12 @@
     <p>Ansprechparnter: {{ $job->contact_name }}</p>
     <p>E-Mail: {{ $job->contact_email }}</p>
     <p>Telefon: {{ $job->contact_phone }}</p>
-
+    <p>Anzahl Kategorien: {{ $job->categories->count() }}</p>
+    <p>Kategorien: 
+    @foreach ($job->categories as $category)
+        {{ $category->name }}
+    @endforeach        
+    </p>
 
     <p>Job-ID: {{ $job->id }}</p>
     <p>Company-ID: {{ $job->company_id }}</p>
