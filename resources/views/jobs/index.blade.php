@@ -14,6 +14,17 @@
         <p>
             <a href="{{ route("jobs.create") }}">Neuen Stellenangebot erstellen</a>
         </p>
+        <div>
+            <p>
+                <a href="{{ route("jobs.index")  }}">Alle</a>
+            </p>
+            <p>
+                <a href="{{ route("jobs.index", ["status" => "aktiv"]) }}">Aktiv</a>
+            </p>
+            <p>
+                <a href="{{ route("jobs.index", ["status" => "inaktiv"]) }}">Inaktiv</a>
+            </p>
+        </div>
     </header>
 
     @if ($jobs->isEmpty())
