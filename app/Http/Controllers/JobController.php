@@ -13,17 +13,16 @@ class JobController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $jobs = Job::get(); // where("is_active", true)->get() to get only active
-
+    {  // creates query builder object.
+        $jobs = Job::query();
+        // modifies query
         if ($request->status === "aktiv") {
-            $jobs = Job::where("is_active", true)->get();
+            $jobs->where("is_active", true);
+        } else if ($request->status === "inaktiv") {
+            $jobs->where("is_active", false);
         }
-
-        if ($request->status === "inaktiv") {
-            $jobs = Job::where("is_active", false)->get();
-        }
-
+        // db query
+        $jobs = $jobs->get();
         return view("jobs.index", ["jobs" => $jobs]);
     }
 
