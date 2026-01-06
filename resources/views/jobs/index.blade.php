@@ -16,7 +16,7 @@
         </p>
         <div>
             <p>
-                <a href="{{ route("jobs.index")  }}">Alle</a>
+                <a href="{{ route("jobs.index")  }}">Alle Jobs</a>
             </p>
             <p>
                 <a href="{{ route("jobs.index", ["status" => "aktiv"]) }}">Aktiv</a>
