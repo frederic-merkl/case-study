@@ -11,6 +11,13 @@
     <main>
         <form action="{{ route("login.store") }}" method="POST">
             @csrf
+            @if ($errors->any())
+                <div>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
             <div>
                 <label for="email-input">E-mail</label>
