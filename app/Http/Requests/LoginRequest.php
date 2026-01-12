@@ -23,7 +23,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {   // login data validation rules
-        return [
+        return [ // email:rfc,dns for more strict validation
             'email' => 'required|string|email',
             'password' => 'required'
         ];

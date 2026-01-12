@@ -65,7 +65,7 @@ class CompanyController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Company $company)
-    {
+    {   
         return view("companies.edit", ["company" => $company]);
     }
 

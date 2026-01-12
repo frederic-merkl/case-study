@@ -48,7 +48,7 @@ class JobController extends Controller
         $validated = $request->validate([
             "title" => "required|string|max:255",
             "company_id" => "required|exists:companies,id",
-            "description" => "nullable|string",
+            "description" => "nullable|string", // string without max:123, for text
             "contact_email" => "required|email|max:255",
             "min_salary" => "nullable|string|max:20",
             "max_salary" => "nullable|string|max:20",
@@ -89,12 +89,14 @@ class JobController extends Controller
         $companies = Company::all();
         $categories = Category::all();
 
+        $currentCompany = $job->company->id;
         $currentCategoryIds = $job->categories->pluck("id")->toArray();
 
         return view("jobs.edit", [
             "job" => $job,
             "companies" => $companies,
             "categories" => $categories,
+            "currentCompany" => $currentCompany,
             "currentCategoryIds" => $currentCategoryIds
         ]);
     }
