@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Job;
 use Illuminate\Http\Request;
+
 
 class CompanyController extends Controller
 {
@@ -51,11 +53,12 @@ class CompanyController extends Controller
     }
 
     /**
-     * Display the specified resource (Detailansicht).
+     * Display the specified resource.
      */
     public function show(Company $company)
     {
-        return view("companies.show", ["company" => $company]);
+        $jobs = Job::all();
+        return view("companies.show", ["company" => $company, "jobs" => $jobs]);
     }
 
     /**

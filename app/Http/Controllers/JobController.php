@@ -15,7 +15,7 @@ class JobController extends Controller
     public function index(Request $request)
     {  // creates query builder object.
         $jobs = Job::query();
-        // modifies query
+        // modifies query; only supportet parameter affect the query; implicit validation.
         if ($request->status === "aktiv") {
             $jobs->where("is_active", true);
         } else if ($request->status === "inaktiv") {
@@ -48,15 +48,15 @@ class JobController extends Controller
         $validated = $request->validate([
             "title" => "required|string|max:255",
             "company_id" => "required|exists:companies,id",
-            "description" => "required|string",
+            "description" => "nullable|string",
             "contact_email" => "required|email|max:255",
-            "min_salary" => "nullable|string",
-            "max_salary" => "nullable|string",
+            "min_salary" => "nullable|string|max:20",
+            "max_salary" => "nullable|string|max:20",
             "location" => "nullable|string|max:100",
             "contact_name" => "nullable|string|max:100",
             "contact_phone" => "nullable|string|max:100",
             "website" => "nullable|string|max:255",
-            "tags" => "nullable|string",
+            "tags" => "nullable|string|max:255",
             "category_ids" => "nullable|array",
         ]);
 
@@ -81,19 +81,19 @@ class JobController extends Controller
     }
     /**
      * Show the form for editing the specified resource.
+     * uses route-model-binding
      */
+
     public function edit(Job $job)
     {
         $companies = Company::all();
         $categories = Category::all();
 
-        $currentCompany = $job->company->id;
         $currentCategoryIds = $job->categories->pluck("id")->toArray();
 
         return view("jobs.edit", [
             "job" => $job,
             "companies" => $companies,
-            "currentCompany" => $currentCompany,
             "categories" => $categories,
             "currentCategoryIds" => $currentCategoryIds
         ]);
@@ -115,12 +115,11 @@ class JobController extends Controller
             "contact_name" => "nullable|string|max:100",
             "contact_phone" => "nullable|string|max:100",
             "website" => "nullable|string|max:255",
-            "tags" => "nullable|string",
+            "tags" => "nullable|string|max:255",
             "category_ids" => "nullable|array",
         ]);
 
         $job->update(array_merge($validated, [
-            "tags" => $request->input("tags"),
             "is_active" => $request->boolean("is_active"),
         ]));
 
