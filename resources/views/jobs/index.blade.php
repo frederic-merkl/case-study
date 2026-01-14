@@ -10,20 +10,24 @@
 
 <body>
     <header>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="sumbit">Logout</button>
+        </form>
         <h1>Aktive Stellenangebote</h1>
+
         <p>
-            <a href="{{ route("jobs.create") }}">Neuen Stellenangebot erstellen</a>
+            <a href="{{ route('jobs.create') }}">Neuen Stellenangebot erstellen</a>
         </p>
         <div>
             <p>
-                <a href="{{ route("jobs.index")  }}">Alle Jobs</a>
+                <a href="{{ route('jobs.index') }}">Alle Jobs</a>
             </p>
             <p>
-                <a href="{{ route("jobs.index", ["status" => "aktiv"]) }}">Aktiv</a>
+                <a href="{{ route('jobs.index', ['status' => 'aktiv']) }}">Aktiv</a>
             </p>
             <p>
-                <a href="{{ route("jobs.index", ["status" => "inaktiv"]) }}">Inaktiv</a>
-            </p>
+                <a href="{{ route('jobs.index', ['status' => 'inaktiv']) }}">Inaktiv</a>
         </div>
     </header>
 
@@ -33,7 +37,7 @@
         <ul>
             @foreach ($jobs as $job)
                 <li>
-                    <a href="{{ route("jobs.show", ["job" => $job]) }}">
+                    <a href="{{ route('jobs.show', ['job' => $job]) }}">
                         {{ $job->title }}
                     </a>
                 </li>
@@ -43,11 +47,11 @@
 
     <footer>
         <hr>
-        <a href="{{ route("categories.index") }}">Kategorien</a>
+        <a href="{{ route('categories.index') }}">Kategorien</a>
         <br>
-        <a href="{{ route("companies.index") }}">Firmen</a>
+        <a href="{{ route('companies.index') }}">Firmen</a>
         <br>
-        <a href="{{ route("users.index") }}">Benutzer</a>
+        <a href="{{ route('users.index') }}">Benutzer</a>
     </footer>
 </body>
 
