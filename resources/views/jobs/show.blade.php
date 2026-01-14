@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    @if (session('success'))
+        <div>
+            {{ session('success') }}
+        </div>
+    @endif
 
     <header>
         <h1>{{ $job->title }}</h1>
@@ -20,11 +25,11 @@
 
     <h2><u>Details</u></h2>
 
-    <p><b>Status:</b> {{ $job->is_active ? "Aktiv" : "Inaktiv" }}</p>
+    <p><b>Status:</b> {{ $job->is_active ? 'Aktiv' : 'Inaktiv' }}</p>
 
     <p><b>Gehalt:</b>
-        {{ $job->min_salary ? $job->min_salary : "N/A" }} -
-        {{ $job->max_salary ? $job->max_salary : "N/A" }}
+        {{ $job->min_salary ? $job->min_salary : 'N/A' }} -
+        {{ $job->max_salary ? $job->max_salary : 'N/A' }}
     </p>
 
     <p><b>Ort:</b> {{ $job->location }}</p>
@@ -34,7 +39,7 @@
         @endforeach
     </p>
 
-    <p><b>Tags:</b></p> {{$job->tags}}
+    <p><b>Tags:</b></p> {{ $job->tags }}
 
     <p><b>Erstellt:</b> {{ $job->created_at }}</p>
     <p><b>Aktualisiert:</b> {{ $job->updated_at }}</p>

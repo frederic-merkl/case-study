@@ -49,7 +49,7 @@ class CompanyController extends Controller
             "user_id" => auth()->id(),
         ]));
 
-        return redirect()->route("companies.show", $company);
+        return redirect()->route("companies.show", $company)->with('success', 'Firma erfolgreich erstellt');
     }
 
     /**
@@ -89,7 +89,7 @@ class CompanyController extends Controller
 
         $company->update($validated);
 
-        return redirect()->route("companies.show", $company);
+        return redirect()->route("companies.show", $company)->with('success', 'Firma erfolgreich aktualisiert!');
     }
 
     /**

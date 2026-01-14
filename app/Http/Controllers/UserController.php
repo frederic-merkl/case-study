@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view("users.index", ["users" => $users]);
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        return view('users.create');
     }
 
     /**
@@ -35,9 +35,9 @@ class UserController extends Controller
             "email" => "required|email|unique:users,email",
             "password" => "required|min:8",
         ]);
-        User::create($validated);
+        $user = User::create($validated);
 
-        return redirect()->route("users.index");
+        return redirect()->route('users.show', $user)->with('success', 'Benutzer erfolgreich erstellt');
     }
 
     /**
@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route("users.show", $user);
+        return redirect()->route("users.show", $user)->with('success', 'Benutzer erfolgreich aktualisiert');;
     }
 
     /**

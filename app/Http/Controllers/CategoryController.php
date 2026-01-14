@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return view("categories.index", ["categories" => $categories]);
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view("categories.create");
+        return view('categories.create');
     }
 
     /**
@@ -31,12 +31,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            "name" => "required|string|max:50|unique:categories,name",
+            'name' => 'required|string|max:50|unique:categories,name',
         ]);
 
-        Category::create($validated);
+        $category = Category::create($validated);
 
-        return redirect()->route("categories.index");
+        return redirect()->route('categories.show', $category)->with('success', 'Kategorie erfolgreich erstellt');
     }
 
     /**
@@ -67,7 +67,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route("categories.show", $category);
+        return redirect()->route("categories.show", $category)->with('success', 'Kategorie erfolgreich aktualisiert');;
     }
 
     /**

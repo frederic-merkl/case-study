@@ -9,7 +9,11 @@
 </head>
 
 <body>
-
+    @if (session('success'))
+        <div>
+            {{ session('success') }}
+        </div>
+    @endif
     <header>
         <h1>{{ $company->name }}</h1>
         <hr>
@@ -41,7 +45,7 @@
             <ul>
                 @foreach ($jobs as $job)
                     <li>
-                        <a href="job.show">{{$job->title}}</a>
+                        <a href="job.show">{{ $job->title }}</a>
                     </li>
                 @endforeach
             </ul>

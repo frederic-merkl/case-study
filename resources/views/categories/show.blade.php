@@ -9,7 +9,12 @@
 </head>
 
 <body>
-
+    @if (session('success'))
+        <div>
+            {{ session('success') }}
+        </div>
+    @endif
+    
     <header>
         <h1>Kategorie: {{ $category->name }}</h1>
     </header>

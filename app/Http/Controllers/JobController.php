@@ -13,17 +13,17 @@ class JobController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {  // creates query builder object.
+    {  // creates query builder.
         $jobs = Job::query();
-        // modifies query; only supportet parameter affect the query; implicit validation.
-        if ($request->status === "aktiv") {
-            $jobs->where("is_active", true);
-        } else if ($request->status === "inaktiv") {
-            $jobs->where("is_active", false);
+        // modifies db-query based on query string; only supportet parameter affect the db-query; implicit validation.
+        if ($request->query('status') === 'aktiv') {
+            $jobs->where('is_active', true);
+        } else if ($request->query('status') === 'inaktiv') {
+            $jobs->where('is_active', false);
         }
         // db query
         $jobs = $jobs->get();
-        return view("jobs.index", ["jobs" => $jobs]);
+        return view('jobs.index', ['jobs' => $jobs]);
     }
 
     /**
@@ -42,13 +42,14 @@ class JobController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * TODO use request classes
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
             "title" => "required|string|max:255",
             "company_id" => "required|exists:companies,id",
-            "description" => "nullable|string", // string without max:123, for text
+            "description" => "nullable|string", // text DB type - string without max for validation
             "contact_email" => "required|email|max:255",
             "min_salary" => "nullable|string|max:20",
             "max_salary" => "nullable|string|max:20",
@@ -61,12 +62,13 @@ class JobController extends Controller
         ]);
 
         // 'use' to import parent scope into local scope
-        //  DB::transaction to rollback data if something goes wrong between to DB operations -> auto rollback
+        //  DB::transaction to rollback data if something goes wrong between two DB operations -> auto rollback
+        //  arriay_merge to merge user input and server generated input
         return DB::transaction(function () use ($request, $validated) {
             $job = Job::create(array_merge($validated, [
                 "tags" => $request->input("tags"),
                 "is_active" => $request->boolean("is_active"),
-                "user_id" => auth()->id()
+                "user_id" => auth()->id() // connects job with user id -> TODO check what does auth() under the hood
             ]));
 
             $job->categories()->sync($request->input("category_ids"));
