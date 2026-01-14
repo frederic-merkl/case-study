@@ -45,8 +45,12 @@ class Job extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    // Laravel magic automatically finds the pivot table 'category_job' through this relationship
+    // Convention: alphabetical order of model names (category + job)
     public function categories(): BelongsToMany
     {
+        // If table name is not by convention: $this->belongsToMany(Category::class, 'my_custom_pivot_table');
         return $this->belongsToMany(Category::class);
     }
 

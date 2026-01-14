@@ -6,7 +6,7 @@ use App\Models\Job;
 use App\Models\Company;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class JobController extends Controller
 {
     /**
@@ -57,18 +57,24 @@ class JobController extends Controller
             "contact_phone" => "nullable|string|max:100",
             "website" => "nullable|string|max:255",
             "tags" => "nullable|string|max:255",
-            "category_ids" => "nullable|array",
+            "category_ids" => "required|array|min:1",
         ]);
 
-        $job = Job::create(array_merge($validated, [
-            "tags" => $request->input("tags"),
-            "is_active" => $request->boolean("is_active"),
-            "user_id" => auth()->id()
-        ]));
+        // 'use' to import parent scope into local scope
+        //  DB::transaction to rollback data if something goes wrong between to DB operations -> auto rollback
+        return DB::transaction(function () use ($request, $validated) {
+            $job = Job::create(array_merge($validated, [
+                "tags" => $request->input("tags"),
+                "is_active" => $request->boolean("is_active"),
+                "user_id" => auth()->id()
+            ]));
 
-        $job->categories()->sync($request->input("category_ids"));
+            $job->categories()->sync($request->input("category_ids"));
 
-        return redirect()->route("jobs.show", $job);
+            return redirect()->route("jobs.show", $job)->with('success', 'Job erfolgreich erstellt');
+
+        });
+
     }
 
 
@@ -118,16 +124,19 @@ class JobController extends Controller
             "contact_phone" => "nullable|string|max:100",
             "website" => "nullable|string|max:255",
             "tags" => "nullable|string|max:255",
-            "category_ids" => "nullable|array",
+            "category_ids" => "required|array|min:1",
         ]);
+        return DB::transaction(function () use ($validated, $request, $job) {
+            $job->update(array_merge($validated, [
+                "is_active" => $request->boolean("is_active"),
+            ]));
 
-        $job->update(array_merge($validated, [
-            "is_active" => $request->boolean("is_active"),
-        ]));
+            $job->categories()->sync($request->input("category_ids"));
 
-        $job->categories()->sync($request->input("category_ids", []));
+            return redirect()->route("jobs.show", $job)->with('success', 'Aktualiserung erfolgreich');
+        });
 
-        return redirect()->route("jobs.show", $job);
+
     }
 
     /**
