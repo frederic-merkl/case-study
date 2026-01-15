@@ -57,7 +57,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        $jobs = Job::all();
+        $jobs = $company->jobs; // get all jobs from that company through realtionships -> dynamic property: alternative jobs() for more detaile queries
         return view("companies.show", ["company" => $company, "jobs" => $jobs]);
     }
 

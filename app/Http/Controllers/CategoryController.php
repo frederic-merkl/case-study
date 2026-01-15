@@ -43,8 +43,9 @@ class CategoryController extends Controller
      * Display the specified resource.
      */
     public function show(Category $category)
-    {
-        return view("categories.show", ["category" => $category]);
+    {   
+        $jobs = $category->jobs; // get all realet jobs through dynamic properties/ realtionships methods
+        return view("categories.show", ["category" => $category, 'jobs'=>$jobs]);
     }
 
     /**
@@ -67,7 +68,7 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route("categories.show", $category)->with('success', 'Kategorie erfolgreich aktualisiert');;
+        return redirect()->route('categories.show', $category)->with('success', 'Kategorie erfolgreich aktualisiert');;
     }
 
     /**
@@ -77,6 +78,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route("categories.index");
+        return redirect()->route('categories.index');
     }
 }
