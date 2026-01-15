@@ -34,7 +34,6 @@ class StoreJobRequest extends FormRequest
             "website" => "nullable|string|max:255",
             "tags" => "nullable|string|max:255",
             "category_ids" => "required|array|min:1",
-            ƒ
         ];
     }
 }
