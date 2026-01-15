@@ -14,7 +14,7 @@
             {{ session('success') }}
         </div>
     @endif
-    
+
     <header>
         <h1>Kategorie: {{ $category->name }}</h1>
     </header>
@@ -31,6 +31,18 @@
     <div>
         Aktualisiert: {{ $category->updated_at }}
     </div>
+
+    <div>
+        <ul>
+            @foreach ($jobs as $job)
+                <li>
+                    <a href="{{ route('jobs.show', $job) }}">{{ $job->title }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    </div>
+
 
     <footer>
         <hr>

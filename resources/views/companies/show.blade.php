@@ -45,7 +45,7 @@
             <ul>
                 @foreach ($jobs as $job)
                     <li>
-                        <a href="job.show">{{ $job->title }}</a>
+                        <a href='{{ route('jobs.show', $job) }}'>{{ $job->title }}</a>
                     </li>
                 @endforeach
             </ul>
