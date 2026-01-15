@@ -58,7 +58,7 @@ class JobController extends Controller
             "contact_phone" => "nullable|string|max:100",
             "website" => "nullable|string|max:255",
             "tags" => "nullable|string|max:255",
-            "category_ids" => "required|array|min:1",
+            "category_ids" => "required|array|min:1", 
         ]);
 
         // 'use' to import parent scope into local scope
@@ -71,7 +71,7 @@ class JobController extends Controller
                 "user_id" => auth()->id() // connects job with user id -> TODO check what does auth() under the hood
             ]));
 
-            $job->categories()->sync($request->input("category_ids"));
+            $job->categories()->sync($request->input("category_ids", [])); 
 
             return redirect()->route("jobs.show", $job)->with('success', 'Job erfolgreich erstellt');
 
