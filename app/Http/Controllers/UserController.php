@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
@@ -30,9 +32,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $userStoreRequest)
+    public function store(StoreUserRequest $storeUserRequest)
     {
-        $validated = $userStoreRequest->validated();
+        $validated = $storeUserRequest->validated();
         $user = User::create($validated);
 
         return redirect()->route('users.show', $user)->with('success', 'Benutzer erfolgreich erstellt');
@@ -57,9 +59,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $userUpdateRequest, User $user)
+    public function update(UpdateUserRequest $updateUserRequest, User $user)
     {
-        $validated = $userUpdateRequest->validated();
+        $validated = $updateUserRequest->validated();
 
         $user->update($validated);
 

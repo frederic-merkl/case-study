@@ -30,7 +30,7 @@
 
 			<div>
 				<button type="submit">Speichern</button>
-				<a href="{{ route('categories.index') }}">Abbrechen</a>
+				<a href="{{ route('categories.index') }}">Abbrechen</a>				
 			</div>
 		</form>
 	</div>
