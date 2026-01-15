@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJobRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\UpdateJobRequest;
 use App\Models\Job;
 use App\Models\Company;
 use App\Models\Category;
@@ -44,34 +47,21 @@ class JobController extends Controller
      * Store a newly created resource in storage.
      * TODO use request classes
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $storeJobRequest)
     {
-        $validated = $request->validate([
-            "title" => "required|string|max:255",
-            "company_id" => "required|exists:companies,id",
-            "description" => "nullable|string", // text DB type - string without max for validation
-            "contact_email" => "required|email|max:255",
-            "min_salary" => "nullable|string|max:20",
-            "max_salary" => "nullable|string|max:20",
-            "location" => "nullable|string|max:100",
-            "contact_name" => "nullable|string|max:100",
-            "contact_phone" => "nullable|string|max:100",
-            "website" => "nullable|string|max:255",
-            "tags" => "nullable|string|max:255",
-            "category_ids" => "required|array|min:1", 
-        ]);
+        $validated = $storeJobRequest->validated();
 
         // 'use' to import parent scope into local scope
         //  DB::transaction to rollback data if something goes wrong between two DB operations -> auto rollback
         //  arriay_merge to merge user input and server generated input
-        return DB::transaction(function () use ($request, $validated) {
+        return DB::transaction(function () use ($storeJobRequest, $validated) {
             $job = Job::create(array_merge($validated, [
-                "tags" => $request->input("tags"),
-                "is_active" => $request->boolean("is_active"),
+                "tags" => $storeJobRequest->input("tags"),
+                "is_active" => $storeJobRequest->boolean("is_active"),
                 "user_id" => auth()->id() // connects job with user id -> TODO check what does auth() under the hood
             ]));
 
-            $job->categories()->sync($request->input("category_ids", [])); 
+            $job->categories()->sync($storeJobRequest->input("category_ids", []));
 
             return redirect()->route("jobs.show", $job)->with('success', 'Job erfolgreich erstellt');
 
@@ -112,33 +102,19 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Job $job)
+    public function update(UpdateJobRequest $updateJobRequest, $job)
     {
-        $validated = $request->validate([
-            "title" => "required|string|max:255",
-            "company_id" => "required|exists:companies,id",
-            "description" => "required|string",
-            "contact_email" => "required|email|max:255",
-            "min_salary" => "nullable|string",
-            "max_salary" => "nullable|string",
-            "location" => "nullable|string|max:100",
-            "contact_name" => "nullable|string|max:100",
-            "contact_phone" => "nullable|string|max:100",
-            "website" => "nullable|string|max:255",
-            "tags" => "nullable|string|max:255",
-            "category_ids" => "required|array|min:1",
-        ]);
-        return DB::transaction(function () use ($validated, $request, $job) {
+        $validated = $updateJobRequest->validated();
+        return DB::transaction(function () use ($validated, $updateJobRequest, $job) {
             $job->update(array_merge($validated, [
-                "is_active" => $request->boolean("is_active"),
+                // is_active becomes false if no value is present. in $validated it would not change anything in the DB 
+                "is_active" => $updateJobRequest->boolean("is_active"),
             ]));
 
-            $job->categories()->sync($request->input("category_ids"));
+            $job->categories()->sync($updateJobRequest->input("category_ids"));
 
             return redirect()->route("jobs.show", $job)->with('success', 'Aktualiserung erfolgreich');
         });
-
-
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJobRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -30,20 +32,9 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $storeJobRequest)
     {
-        $validated = $request->validate([
-            "name" => "required|string|max:255|unique:companies,name",
-            "description" => "required|string",
-            "email" => "required|email|max:255|unique:companies,email",
-            "city" => "required|string|max:100",
-            "street" => "nullable|string|max:255",
-            "zip_code" => "nullable|string|max:100",
-            "country" => "nullable|string|max:100",
-            "phone" => "nullable|string|max:100",
-            "website" => "nullable|string|max:255",
-            "employee_size" => "nullable|string",
-        ]);
+        $validated = $storeJobRequest->validated();
 
         $company = Company::create(array_merge($validated, [
             "user_id" => auth()->id(),
@@ -72,20 +63,9 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(UpdateCompanyRequest $updateCompanyRequest, Company $company)
     {
-        $validated = $request->validate([
-            "name" => "required|string|max:255|unique:companies,name,{$company->id}",
-            "description" => "required|string",
-            "email" => "required|email|max:255|unique:companies,email,{$company->id}",
-            "city" => "required|string|max:100",
-            "street" => "nullable|string|max:255",
-            "zip_code" => "nullable|string|max:100",
-            "country" => "nullable|string|max:100",
-            "phone" => "nullable|string|max:100",
-            "website" => "nullable|url|max:255",
-            "employee_size" => "nullable|string",
-        ]);
+        $validated = $updateCompanyRequest->validated();
 
         $company->update($validated);
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,13 +30,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $userStoreRequest)
     {
-        $validated = $request->validate([
-            "name" => "required|string|max:255",
-            "email" => "required|email|unique:users,email",
-            "password" => "required|min:8",
-        ]);
+        $validated = $userStoreRequest->validated();
         $user = User::create($validated);
 
         return redirect()->route('users.show', $user)->with('success', 'Benutzer erfolgreich erstellt');
@@ -59,13 +57,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $userUpdateRequest, User $user)
     {
-        $validated = $request->validate([
-            "name" => "required|string|max:255",
-            "email" => "required|email|unique:users,email,{$user->id}",
-            "password" => "nullable|min:8",
-        ]);
+        $validated = $userUpdateRequest->validated();
 
         $user->update($validated);
 

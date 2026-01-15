@@ -11,7 +11,7 @@ class StoreCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class StoreCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => "required|string|max:255|unique:companies,name",
+            "description" => "required|string",
+            "email" => "required|email|max:255|unique:companies,email",
+            "city" => "required|string|max:100",
+            "street" => "nullable|string|max:255",
+            "zip_code" => "nullable|string|max:100",
+            "country" => "nullable|string|max:100",
+            "phone" => "nullable|string|max:100",
+            "website" => "nullable|string|max:255",
+            "employee_size" => "nullable|string",
         ];
     }
 }

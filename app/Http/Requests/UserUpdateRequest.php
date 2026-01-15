@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +20,14 @@ class UpdateCategoryRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   // get the categorie model id from the current model URL 
-        $category = $this->route('category');
+    {
+        $user = $this->route('user');
         return [
-            'name' => [
-                'required',
-                'string',
-                'max:50',
-                Rule::unique('categories', 'name')->ignore($category->id)
-            ]
+
+            "name" => "required|string|max:255",
+            "email" => "required|email|unique:users,email,{$user->id}",
+            "password" => "nullable|min:8",
+
         ];
     }
 }

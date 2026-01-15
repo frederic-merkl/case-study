@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -28,14 +30,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $storeCategoryRequest)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:50|unique:categories,name',
-        ]);
+        $validated = $storeCategoryRequest->validated(); // validated() return the data that was validated in the request class
 
-        $category = Category::create($validated);
-
+        $category = Category::create($validated); // creates a model with validated data
+        // return a redirect header/status code to show route with implicit model binding and flash message for user feedback
         return redirect()->route('categories.show', $category)->with('success', 'Kategorie erfolgreich erstellt');
     }
 
@@ -59,12 +59,10 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $updateCategoryRequest, Category $category)
     {
         
-        $validated = $request->validate([
-            "name" => "required|string|max:50|unique:categories,name,{$category->id}"
-        ]);
+        $validated = $updateCategoryRequest->validated();
 
         $category->update($validated);
 
